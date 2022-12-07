@@ -18,18 +18,21 @@ import java.util.Optional;
 @RequestMapping(value = "/movies")
 public class MovieController {
     // executes methods in Movie model (MovieServices)
+    // connects repository and client via Movie and MovieService
 
-    @Autowired
-    MovieRepository movieRepository;
+//    @Autowired
+//    MovieRepository movieRepository;
     @Autowired
     MovieService movieService;
 
     // return list of movies from repository via MovieService methods
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies(){
-        List<Movie> result = movieRepository.findAll();
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//        List<Movie> result = movieRepository.findAll();
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+            List<Movie> movieList = movieService.getAllMovies();
+            return new ResponseEntity<>(movieList, HttpStatus.OK);
+        }
 
     // return movies by id from repository via MovieService methods
     @GetMapping(value = "/{id}")
@@ -39,8 +42,11 @@ public class MovieController {
 
     // create new movie and add to list of movies in repository via MovieService methods
     @PostMapping
-    public ResponseEntity<ArrayList<String>> postNewMovie(@RequestBody Movie movie){
-        return new ResponseEntity<>(HttpStatus.CREATED);
+//  public ResponseEntity<ArrayList<String>> postNewMovie(@RequestBody Movie movie){
+//      return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Movie> addNewMovie(@RequestBody Movie movie){
+        movieService.saveNewMovie(movie);
+        return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
 
 }

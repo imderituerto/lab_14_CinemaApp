@@ -17,14 +17,13 @@ import java.util.Optional;
 public class MovieService {
     // contains logic of Movie model (LOGIC)
     // connects controller and repository
+    // no constructor
 
     @Autowired
     MovieRepository movieRepository;
+
     @Autowired
     MovieList movieList;
-
-    public MovieService(){
-    }
 
     //replies
     public List<Movie> getAllMovies(){
@@ -35,11 +34,16 @@ public class MovieService {
         Movie movie = movieRepository.findById(id).get();
         return movieRepository.findById(id);
     }
+//
+//    public List<Movie> addNewMovie(Movie movie){
+//        MovieList movieList = getAllMovies();
+//        movieList.add(movie);
+//        return movieList;
+//    }
 
-    public List<Movie> postNewMovie(Movie movie){
-        List movieList = getAllMovies();
-        movieList.add(movie);
-        return movieList;
+    public Movie saveNewMovie(Movie movie){
+        movieRepository.save(movie);
+        return movie;
     }
 
 }
